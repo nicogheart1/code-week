@@ -1,0 +1,20 @@
+{
+  "short_name": "Code Week",
+  "name": "Develhope Code Week - Tic Tac Toe AI",
+  "icons": [
+    {
+      "src": "favicon.avif",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "logo192.svg",
+      "type": "image/svg",
+      "sizes": "192x192"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#283681",
+  "background_color": "#283681"
+}

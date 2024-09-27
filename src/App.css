@@ -1,0 +1,47 @@
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.center {
+  text-align: center;
+}
+
+.header {
+  background-color: #fcfcfc;
+  box-shadow: rgba(40, 54, 129, 0.2) 0px 2px 20px 0px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  padding: 0.5rem 1rem;
+}
+
+.board {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.board-row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  width: 100%;
+}
+
+.square {
+  background: transparent;
+  border: 2px solid #999;
+  border-radius: 0;
+  font-size: 3rem;
+  font-weight: bold;
+  line-height: 4rem;
+  padding: 0;
+  text-align: center;
+
+  height: 4rem;
+  width: 4rem;
+}
