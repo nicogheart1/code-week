@@ -1,8 +1,9 @@
+import { useEffect } from "react";
 import { calculateWinner } from "../../utils/game";
 import Square from "../square/square";
 
-const Board = ({ xIsNext, squares, onPlay }) => {
-  function handleClick(i) {
+const Board = ({ xIsNext, squares, onPlay, autoPlay }) => {
+  const handleClick = (i) => {
     if (calculateWinner(squares) || squares[i]) {
       return;
     }
@@ -12,36 +13,39 @@ const Board = ({ xIsNext, squares, onPlay }) => {
     } else {
       nextSquares[i] = "O";
     }
-    //onPlay(nextSquares);
+    onPlay(nextSquares);
+  };
+
+  function randomNumber(max = 8, min = 0) {
+    return Math.floor(Math.random() * max) + min;
   }
 
-  const winner = calculateWinner(squares);
-  let status;
-  if (winner) {
-    status = "Winner: " + winner;
-  } else {
-    status = "Next player: " + (xIsNext ? "X" : "O");
-  }
+  useEffect(() => {
+    if (autoPlay && !xIsNext) {
+      setTimeout(() => {
+        let check = true;
+        while (check) {
+          const randomMove = randomNumber();
+          if (!squares[randomMove]) {
+            handleClick(randomMove);
+            check = false;
+          }
+        }
+      }, randomNumber(3000, 1500));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [squares]);
 
   return (
     <>
-      <div className="status">{status}</div>
-      <div className="board">
-        <div className="board-row">
-          <Square value={squares[0]} onSquareClick={() => handleClick(0)} />
-          <Square value={squares[1]} onSquareClick={() => handleClick(1)} />
-          <Square value={squares[2]} onSquareClick={() => handleClick(2)} />
-        </div>
-        <div className="board-row">
-          <Square value={squares[3]} onSquareClick={() => handleClick(3)} />
-          <Square value={squares[4]} onSquareClick={() => handleClick(4)} />
-          <Square value={squares[5]} onSquareClick={() => handleClick(5)} />
-        </div>
-        <div className="board-row">
-          <Square value={squares[6]} onSquareClick={() => handleClick(6)} />
-          <Square value={squares[7]} onSquareClick={() => handleClick(7)} />
-          <Square value={squares[8]} onSquareClick={() => handleClick(8)} />
-        </div>
+      <div className="board glass">
+        {squares.map((s, i) => (
+          <Square
+            key={i}
+            value={squares[i]}
+            onSquareClick={() => handleClick(i)}
+          />
+        ))}
       </div>
     </>
   );
