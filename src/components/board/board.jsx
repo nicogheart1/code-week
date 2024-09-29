@@ -38,12 +38,14 @@ const Board = ({ xIsNext, squares, onPlay, autoPlay }) => {
 
   return (
     <>
-      <div className="board glass">
+      <div className="center your-turn">{xIsNext ? "It's your turn" : null}</div>
+      <div className="board glass" id="board">
         {squares.map((s, i) => (
           <Square
             key={i}
             value={squares[i]}
             onSquareClick={() => handleClick(i)}
+            position={i + 1}
           />
         ))}
       </div>

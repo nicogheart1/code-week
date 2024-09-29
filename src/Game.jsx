@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Board from "./components/board/board";
 import Video from "./components/video/video";
 import { calculateWinner } from "./utils/game";
+import { getHands } from "./ai/handPoseAI";
 
 const Game = () => {
   const [status, setStatus] = useState("stop");
@@ -28,6 +29,27 @@ const Game = () => {
   const winner = calculateWinner(currentSquares);
   const tie = !winner && currentMove >= 9;
 
+  const retireveHands = async () => {
+    try {
+      const video = document.querySelector("#videoElement");
+      if (video) {
+        const hands = await getHands();
+        console.log("hands", hands);
+        hands.forEach(hand => {
+            console.log(hand.handedness, hand.keypoints.find(keypoint => keypoint.name === "index_finger_tip"));
+        })
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    if (xIsNext) {
+      retireveHands();
+    }
+  }, [xIsNext]);
+
   return (
     <>
       {status === "play" ? (
@@ -38,7 +60,7 @@ const Game = () => {
             squares={currentSquares}
             onPlay={handlePlay}
           />
-          <Video />
+          <Video hide={!xIsNext} squares={currentSquares} />
         </>
       ) : null}
 

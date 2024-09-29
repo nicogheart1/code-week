@@ -1,7 +1,7 @@
 import { useEffect } from "react";
-import { getHands } from "../../ai/handPoseAI";
+import Square from "../square/square";
 
-const Video = () => {
+const Video = ({ hide = false, squares }) => {
   let video;
 
   const startVideoStream = () => {
@@ -31,32 +31,32 @@ const Video = () => {
     }
   };
 
-  const retireveHands = async () => {
-    try {
-      if (video) {
-        const hands = await getHands();
-        console.log("hands", hands);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   useEffect(() => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     video = document.querySelector("#videoElement");
     startVideoStream();
   }, []);
 
-  if (video) {
-    retireveHands();
-  }
-
   return (
-    <div className="video-container">
-      <video height={250} width={250} autoPlay id="videoElement"></video>
-      <button onClick={startVideoStream}>Start video</button>
-      <button onClick={stopVideoStream}>Stop video</button>
+    <div
+      className="video-container"
+      style={{
+        display: hide ? "none" : undefined,
+      }}
+    >
+      <video
+        className="video"
+        autoPlay
+        id="videoElement"
+      ></video>
+      <div className="video-squares">
+        {squares.map((s, i) => {
+          if (s) return null;
+          return <Square key={`video-square-${i + 1}`} value={i + 1} />;
+        })}
+      </div>
+      {/*<button onClick={startVideoStream}>Start video</button>
+      <button onClick={stopVideoStream}>Stop video</button>*/}
     </div>
   );
 };
