@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/code-week/static/css/main.1684f636.css",
+    "main.css": "/code-week/static/css/main.38fcd1b7.css",
     "main.js": "/code-week/static/js/main.e6dc9e07.js",
     "static/media/logo_ext_white.svg": "/code-week/static/media/logo_ext_white.2ea27eb876c3f399056fa6505558db6e.svg",
     "static/media/logo_ext.svg": "/code-week/static/media/logo_ext.abaaaf91f1115542e5eb1fff8f0e2755.svg",
     "index.html": "/code-week/index.html",
-    "main.1684f636.css.map": "/code-week/static/css/main.1684f636.css.map",
+    "main.38fcd1b7.css.map": "/code-week/static/css/main.38fcd1b7.css.map",
     "main.e6dc9e07.js.map": "/code-week/static/js/main.e6dc9e07.js.map"
   },
   "entrypoints": [
-    "static/css/main.1684f636.css",
+    "static/css/main.38fcd1b7.css",
     "static/js/main.e6dc9e07.js"
   ]
 }
