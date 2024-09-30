@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Board from "./components/board/board";
-import Video from "./components/video/video";
+//import Video from "./components/video/video";
 import { calculateWinner } from "./utils/game";
 import { getHands } from "./ai/handPoseAI";
 
@@ -60,7 +60,7 @@ const Game = () => {
             squares={currentSquares}
             onPlay={handlePlay}
           />
-          <Video hide={!xIsNext} squares={currentSquares} />
+          {/*<Video hide={!xIsNext} squares={currentSquares} />*/}
         </>
       ) : null}
 
