@@ -3,6 +3,7 @@ import Board from "./components/board/board";
 //import Video from "./components/video/video";
 import { calculateWinner } from "./utils/game";
 import { getHands } from "./ai/handPoseAI";
+import WebCam from "./components/webcam/webcam";
 
 const Game = () => {
   const [status, setStatus] = useState("stop");
@@ -35,9 +36,14 @@ const Game = () => {
       if (video) {
         const hands = await getHands();
         console.log("hands", hands);
-        hands.forEach(hand => {
-            console.log(hand.handedness, hand.keypoints.find(keypoint => keypoint.name === "index_finger_tip"));
-        })
+        hands.forEach((hand) => {
+          console.log(
+            hand.handedness,
+            hand.keypoints.find(
+              (keypoint) => keypoint.name === "index_finger_tip"
+            )
+          );
+        });
       }
     } catch (error) {
       console.error(error);
@@ -61,6 +67,7 @@ const Game = () => {
             onPlay={handlePlay}
           />
           {/*<Video hide={!xIsNext} squares={currentSquares} />*/}
+          <WebCam />
         </>
       ) : null}
 
