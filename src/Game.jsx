@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import Board from "./components/board/board";
-//import Video from "./components/video/video";
 import { calculateWinner } from "./utils/game";
-import { getHands } from "./ai/handPoseAI";
 import WebCam from "./components/webcam/webcam";
+
+let timer = {};
 
 const Game = () => {
   const [status, setStatus] = useState("stop");
@@ -30,44 +30,74 @@ const Game = () => {
   const winner = calculateWinner(currentSquares);
   const tie = !winner && currentMove >= 9;
 
-  const retireveHands = async () => {
-    try {
-      const video = document.querySelector("#videoElement");
-      if (video) {
-        const hands = await getHands();
-        console.log("hands", hands);
-        hands.forEach((hand) => {
-          console.log(
-            hand.handedness,
-            hand.keypoints.find(
-              (keypoint) => keypoint.name === "index_finger_tip"
-            )
-          );
-        });
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   useEffect(() => {
     if (xIsNext) {
-      retireveHands();
+      //retireveHands();
     }
   }, [xIsNext]);
+
+  const handleClick = (i) => {
+    console.log("mossa", i);
+    if (calculateWinner(currentSquares) || currentSquares[i]) {
+      return;
+    }
+    const nextSquares = currentSquares.slice();
+    if (xIsNext) {
+      nextSquares[i] = "X";
+    } else {
+      nextSquares[i] = "O";
+    }
+    handlePlay(nextSquares);
+  };
+
+  const onSquareDetected = (squareId) => {
+    if (!squareId) {
+      clearTimeout(timer?.id);
+    }
+    const squares = [
+      document.getElementById("square-1"),
+      document.getElementById("square-2"),
+      document.getElementById("square-3"),
+      document.getElementById("square-4"),
+      document.getElementById("square-5"),
+      document.getElementById("square-6"),
+      document.getElementById("square-7"),
+      document.getElementById("square-8"),
+      document.getElementById("square-9"),
+    ];
+    squares.forEach((square) => {
+      if (square?.id === squareId) {
+        document.getElementById(square.id).classList.add("square-hover");
+        const squareN = Number(squareId.slice(-1) - 1);
+        if (timer.square !== squareN) {
+          clearTimeout(timer.id);
+          timer.square = squareN;
+          timer.id = setTimeout(() => {
+            handleClick(squareN);
+          }, 3000);
+        }
+      } else {
+        document.getElementById(square.id).classList.remove("square-hover");
+      }
+    });
+  };
 
   return (
     <>
       {status === "play" ? (
         <>
-          <Board
-            autoPlay={!winner}
-            xIsNext={xIsNext}
-            squares={currentSquares}
-            onPlay={handlePlay}
-          />
-          {/*<Video hide={!xIsNext} squares={currentSquares} />*/}
-          <WebCam />
+          <div className="center your-turn">
+            {xIsNext ? "It's your turn" : null}
+          </div>
+          <div className="board-container" id="boardContainer">
+            <Board
+              autoPlay={!winner}
+              xIsNext={xIsNext}
+              squares={currentSquares}
+              onPlay={handleClick}
+            />
+            <WebCam hide={!xIsNext} onSquareDetected={onSquareDetected} />
+          </div>
         </>
       ) : null}
 

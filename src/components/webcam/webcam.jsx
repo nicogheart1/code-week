@@ -3,7 +3,7 @@ import Webcam from "react-webcam";
 import { drawhand, setHandDetector } from "../../ai/handPoseAI";
 import { useInterval } from "../../hooks/useInterval";
 
-const WebCam = () => {
+const WebCam = ({ hide = false, onSquareDetected = () => ({}) }) => {
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
   const [net, setNet] = useState(false);
@@ -31,19 +31,21 @@ const WebCam = () => {
       const hand = await net.estimateHands(video);
       // Draw meth
       const ctx = canvasRef.current.getContext("2d");
-      drawhand(hand, ctx);
+      const squareId = drawhand(hand, ctx);
+      onSquareDetected(squareId);
     }
   };
-  useEffect(() => {
-    const runHandPose = async () => {
-      // Load the MediaPipe handpose model.
-      const net = await setHandDetector();
-      setModelLoaded(true);
-      console.log("Handpose model Loaded");
-      setNet(net);
-      // Loop and Detect hands
-    };
 
+  const runHandPose = async () => {
+    // Load the MediaPipe handpose model.
+    const net = await setHandDetector();
+    setModelLoaded(true);
+    console.log("Handpose model Loaded");
+    setNet(net);
+    // Loop and Detect hands
+  };
+
+  useEffect(() => {
     runHandPose();
   }, []);
 
@@ -51,12 +53,12 @@ const WebCam = () => {
     if (net) {
       detect(net);
     }
-  }, 100);
+  }, 150);
 
   if (!modelLoaded) return null;
 
   return (
-    <div>
+    <>
       <Webcam
         ref={webcamRef}
         style={{
@@ -65,11 +67,14 @@ const WebCam = () => {
           marginRight: "auto",
           left: 0,
           right: 0,
+          top: "50%",
           textAlign: "center",
-          transform: "rotateY(180deg)",
+          transform: "rotateY(180deg) translateY(-50%)",
           zindex: 1,
           width: 640,
           height: 480,
+          opacity: 0,
+          pointerEvents: "none",
         }}
       />
       <canvas
@@ -80,14 +85,17 @@ const WebCam = () => {
           marginRight: "auto",
           left: 0,
           right: 0,
+          top: "50%",
           textAlign: "center",
-          transform: "rotateY(180deg)",
+          transform: "rotateY(180deg) translateY(-50%)",
           zindex: 1,
           width: 640,
           height: 480,
+          pointerEvents: "none",
+          opacity: hide ? 0 : 1,
         }}
       />
-    </div>
+    </>
   );
 };
 
