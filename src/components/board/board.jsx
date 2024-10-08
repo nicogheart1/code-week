@@ -34,7 +34,7 @@ const Board = ({ xIsNext, squares, onPlay, autoPlay }) => {
             key={i}
             value={squares[i]}
             onSquareClick={() => handleClick(i)}
-            position={i + 1}
+            //position={i + 1}
             id={`square-${i + 1}`}
           />
         ))}
