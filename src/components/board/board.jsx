@@ -1,20 +1,9 @@
 import { useEffect } from "react";
-//import { calculateWinner } from "../../utils/game";
 import Square from "../square/square";
 
 const Board = ({ xIsNext, squares, onPlay, autoPlay }) => {
   const handleClick = (i) => {
     onPlay(i);
-    /*if (calculateWinner(squares) || squares[i]) {
-      return;
-    }
-    const nextSquares = squares.slice();
-    if (xIsNext) {
-      nextSquares[i] = "X";
-    } else {
-      nextSquares[i] = "O";
-    }
-    onPlay(nextSquares);*/
   };
 
   function randomNumber(max = 8, min = 0) {

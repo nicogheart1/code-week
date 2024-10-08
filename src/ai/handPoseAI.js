@@ -14,13 +14,13 @@ const setHandDetector = async () => {
   return await handPoseDetection.createDetector(hands, detectorConfig);
 };
 
-function getOffset(el) {
+const getOffset = (el) => {
   const rect = el.getBoundingClientRect();
   return {
     left: rect.left + window.scrollX,
     top: rect.top + window.scrollY,
   };
-}
+};
 
 const drawhand = (predictions, ctx) => {
   let squareId;
@@ -48,7 +48,6 @@ const drawhand = (predictions, ctx) => {
             Math.abs(boardContainer.getBoundingClientRect().width - x) +
             getOffset(boardContainer).left;
           const adjustedY = Math.abs(y + getOffset(boardContainer).top);
-          //console.log("X", adjustedX, "Y", adjustedY);
           squareId = document
             .elementsFromPoint(adjustedX, adjustedY)
             .find((el) => el?.classList?.contains("square"))?.id;

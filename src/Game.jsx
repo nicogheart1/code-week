@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Board from "./components/board/board";
 import { calculateWinner } from "./utils/game";
 import WebCam from "./components/webcam/webcam";
@@ -30,14 +30,7 @@ const Game = () => {
   const winner = calculateWinner(currentSquares);
   const tie = !winner && currentMove >= 9;
 
-  useEffect(() => {
-    if (xIsNext) {
-      //retireveHands();
-    }
-  }, [xIsNext]);
-
   const handleClick = (i) => {
-    console.log("mossa", i);
     if (calculateWinner(currentSquares) || currentSquares[i]) {
       return;
     }
@@ -107,7 +100,7 @@ const Game = () => {
             <h4>Rules</h4>
             <ol>
               <li>
-                You are <span className="bold">X</span>, the computer is{" "}
+                You are <span className="bold">X</span>, the computer is
                 <span className="bold">O</span>. Players take turns putting
                 their marks in empty squares.
               </li>
@@ -120,6 +113,20 @@ const Game = () => {
                 3 marks in a row, the game ends in a tie.
               </li>
             </ol>
+            <h4>How To Play</h4>
+            <ul>
+              <li>
+                When is your turn, click on the square you want to place your
+                move
+              </li>
+              <li>
+                Playing from a desktop browser enable you to play using your
+                hands: just move your hands in front of the camera and the
+                integrated AI will starts to track your fingers, then you just
+                have to place your index onto the square you want to place your
+                move!
+              </li>
+            </ul>
           </div>
           <button onClick={newGame}>New Game</button>
         </div>
