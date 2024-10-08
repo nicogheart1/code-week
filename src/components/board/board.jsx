@@ -1,19 +1,9 @@
 import { useEffect } from "react";
-import { calculateWinner } from "../../utils/game";
 import Square from "../square/square";
 
 const Board = ({ xIsNext, squares, onPlay, autoPlay }) => {
   const handleClick = (i) => {
-    if (calculateWinner(squares) || squares[i]) {
-      return;
-    }
-    const nextSquares = squares.slice();
-    if (xIsNext) {
-      nextSquares[i] = "X";
-    } else {
-      nextSquares[i] = "O";
-    }
-    onPlay(nextSquares);
+    onPlay(i);
   };
 
   function randomNumber(max = 8, min = 0) {
@@ -38,14 +28,14 @@ const Board = ({ xIsNext, squares, onPlay, autoPlay }) => {
 
   return (
     <>
-      <div className="center your-turn">{xIsNext ? "It's your turn" : null}</div>
       <div className="board glass" id="board">
         {squares.map((s, i) => (
           <Square
             key={i}
             value={squares[i]}
             onSquareClick={() => handleClick(i)}
-            position={i + 1}
+            //position={i + 1}
+            id={`square-${i + 1}`}
           />
         ))}
       </div>
