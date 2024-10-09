@@ -119,8 +119,10 @@
   width: 6rem;
   transition: all 250ms;
 }
-.square:hover {
-  transform: scale(0.9);
+@media screen and (min-width: 680px) {
+  .square:hover {
+    transform: scale(0.9);
+  }
 }
 .square .position-index {
   top: 8px;

@@ -122,7 +122,7 @@ const Game = () => {
             <h4>Rules</h4>
             <ol>
               <li>
-                You are <span className="bold">X</span>, the computer is
+                You are <span className="bold">X</span>, the computer is&nbsp;
                 <span className="bold">O</span>. Players take turns putting
                 their marks in empty squares.
               </li>
